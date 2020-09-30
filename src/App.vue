@@ -1,19 +1,40 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <img alt="Vue logo" src="./assets/logo.png" />
+    <h1>Crear nueva tarea</h1>
+
+    <label for="tarea">Tarea</label>
+    <input
+      type="text"
+      id="tarea"
+      v-model="newTask"
+      placeholder="Ingresa una nueva tarea"
+    />
+    <button @click="addTask" class="btn-1">Crear</button>
+    <HelloWorld msg="Listas" :tasks="tasks"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from "./components/HelloWorld.vue";
 
 export default {
-  name: 'App',
+  name: "App",
+  data() {
+    return {
+      newTask: "",
+      tasks: [],
+    };
+  },
   components: {
-    HelloWorld
-  }
-}
+    HelloWorld,
+  },
+  methods: {
+    addTask() {
+      this.tasks.push(this.newTask);
+    },
+  },
+};
 </script>
 
 <style>
