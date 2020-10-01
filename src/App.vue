@@ -2,6 +2,7 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
     <h1>Crear nueva tarea</h1>
+    <h2>{{errorMessage}}</h2>
 
     <label for="tarea">Tarea</label>
     <input
@@ -11,7 +12,7 @@
       placeholder="Ingresa una nueva tarea"
     />
     <button @click="addTask" class="btn-1">Crear</button>
-    <HelloWorld msg="Listas" :tasks="tasks"/>
+    <HelloWorld msg="Listas" :tasks="tasks" @del="deleteTask"/>
   </div>
 </template>
 
@@ -24,6 +25,7 @@ export default {
     return {
       newTask: "",
       tasks: [],
+      errorMessage: ""
     };
   },
   components: {
@@ -31,10 +33,25 @@ export default {
   },
   methods: {
     addTask() {
-      this.tasks.push(this.newTask);
+      if (this.newTask == "") return false 
+      
+      let lowerTasks = this.tasks.map((task) =>
+        task.toLowerCase().replace(" ", "")
+      );
+      if (!lowerTasks.includes(this.newTask.toLowerCase().replace(" ", ""))) {
+        this.tasks.push(this.newTask);
+        this.errorMessage = "";
+      } else {
+        this.errorMessage = "La tarea ya existe";
+      }
+      this.newTask = "";
     },
+    deleteTask(index) {
+      this.tasks.splice(index, 1);
+    } 
   },
 };
+
 </script>
 
 <style>

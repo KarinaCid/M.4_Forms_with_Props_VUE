@@ -4,7 +4,9 @@
     <h2>Lista: </h2>
     <div class="containerList">
       <ul>
-        <li v-for="task in tasks" :key=task>{{task}}</li>
+        <li v-for="(task, index) in tasks" :key=task>{{task}}
+          <button @click="remove(index)">Eliminar</button>
+        </li>
       </ul>
     </div>
   </div>
@@ -17,6 +19,11 @@ export default {
     msg: String,
     tasks: Array
   },
+  methods: {
+    remove(index) {
+      this.$emit("del",index);
+    }
+  }
 };
 </script>
 
@@ -30,7 +37,7 @@ ul {
   padding: 0;
 }
 li {
-  display: inline-block;
+  display: block;
   margin: 0 10px;
 }
 a {
